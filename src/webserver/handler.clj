@@ -4,7 +4,7 @@
             [compojure.route :as route]
             [com.stuartsierra.component :as component]
             [ring.adapter.jetty :refer [run-jetty]]
-            [ring.util.response :refer [resource-response response]]
+            [ring.util.response :refer [resource-response response not-found]]
             [ring.middleware.json :as middleware]
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults api-defaults]]
@@ -49,7 +49,7 @@
               (get-in request [:body "url"]))
        (response nil))
   (DELETE "/names" [] (delete!) (response nil))
-  (route/not-found "Not Found"))
+  (ANY "*" [] (not-found "Not found")))
 
 ;; -----------
 ;; Middlewares
