@@ -7,6 +7,7 @@
                  [cheshire "5.5.0"]
                  [enlive "1.1.6"]
                  [ring "1.4.0"]
+                 [ring-server "0.4.0"]
                  [ring/ring-json "0.3.1"]
                  [ring/ring-jetty-adapter "1.2.1"]
                  [ring/ring-defaults "0.1.5"]

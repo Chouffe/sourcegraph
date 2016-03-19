@@ -4,6 +4,9 @@
             [compojure.route :as route]
             [com.stuartsierra.component :as component]
             [ring.adapter.jetty :refer [run-jetty]]
+
+
+            [ring.server.standalone :refer [serve]]
             [ring.util.response :refer [resource-response response not-found]]
             [ring.middleware.json :as middleware]
             [ring.middleware.params :refer [wrap-params]]
@@ -13,6 +16,7 @@
 
 ;; hashmap: name -> url
 (def data (atom {}))
+(defonce server (atom nil))
 
 ;; ---------
 ;; API utils
@@ -59,6 +63,15 @@
              (middleware/wrap-json-body)
              (wrap-defaults api-defaults)
              wrap-params))
+
+(defn start-server
+  []
+  (future (reset! server (serve app {:port 3001}))))
+
+(defn stop-server
+  []
+  (.stop @server)
+  (reset! server nil))
 
 (defn -main []
   (add-watch data :updates (fn [k r o n] (println "data=> " n)))
